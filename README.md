@@ -7,7 +7,7 @@ This project addresses **binary sexism detection** in social media text using th
 
 ## Dataset
 
-* **Source:** EXIST dataset (NLP UNIBO course material)
+* **Source:** EXIST dataset
 * **Task:** Binary classification (Sexist vs. Not Sexist)
 * **Labels:** Aggregated using majority voting from multiple annotators
 * **Splits:** Training, Validation, Test
