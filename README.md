@@ -1,5 +1,5 @@
 
-# Sexism Detection in Tweets using LSTMs and Transformers
+# Sexism Detection in Tweets using LSTMs and Transformers (Part 1)
 
 ## Project Overview
 
