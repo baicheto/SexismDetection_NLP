@@ -118,7 +118,7 @@ However, experimental results contradicted this hypothesis.
 
 ## Prompting Strategies
 
-### 1️⃣ Zero-Shot Prompting
+### Zero-Shot Prompting
 
 The model receives only the task instruction:
 
@@ -130,7 +130,7 @@ No examples are provided.
 
 ---
 
-### 2️⃣ Static Few-Shot Prompting
+### Static Few-Shot Prompting
 
 The model is provided with a fixed set of labeled examples before the target tweet:
 
@@ -141,7 +141,7 @@ These examples are selected from the beginning of the demonstrations dataset.
 
 ---
 
-### 3️⃣ Dynamic Few-Shot Prompting
+### Dynamic Few-Shot Prompting
 
 A similarity-based example selection strategy was implemented:
 
@@ -169,8 +169,6 @@ A **low temperature** (near greedy decoding) was used to reduce randomness, as t
 ---
 
 ## Evaluation Metrics
-
-Unlike Part 1 (which focused on macro F1-score), this part evaluates:
 
 * **Accuracy**
 * **Error Rate (Fail Ratio)**
