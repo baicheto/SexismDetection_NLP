@@ -81,5 +81,127 @@ A pretrained **RoBERTa Transformer** is used for contextual text classification.
 * Scikit-learn
 * Pandas, NumPy
 
+Here is a **ready-to-paste GitHub README section** (clean Markdown formatting, properly structured):
+
+---
+
+# Prompting for Sexism Detection with Large Language Models (Part 2)
+
+## Project Overview
+
+The second part of the project explores **prompt-based sexism detection** using **Large Language Models (LLMs)** instead of fine-tuning task-specific classifiers.
+
+The main research question addressed is:
+
+> **How do two different versions of the same LLM behave on the same classification task?**
+
+We specifically compare two versions of the same model family:
+
+* **Mistral-v0.2**
+* **Mistral-v0.3**
+
+The goal is to analyze performance differences across **zero-shot**, **few-shot**, and **dynamic few-shot** prompting strategies.
+
+---
+
+## Models Used
+
+Two open-weight instruction-tuned models were evaluated:
+
+* **Mistral-7B-Instruct-v0.2**
+* **Mistral-7B-Instruct-v0.3**
+
+The expectation was that the newer version (**v0.3**), with an extended vocabulary (32,768 tokens), would outperform **v0.2**.
+However, experimental results contradicted this hypothesis.
+
+---
+
+## Prompting Strategies
+
+### 1️⃣ Zero-Shot Prompting
+
+The model receives only the task instruction:
+
+```
+Classify the following tweet as SEXIST (YES) or NOT SEXIST (NO).
+```
+
+No examples are provided.
+
+---
+
+### 2️⃣ Static Few-Shot Prompting
+
+The model is provided with a fixed set of labeled examples before the target tweet:
+
+* *n* examples labeled **YES**
+* *n* examples labeled **NO**
+
+These examples are selected from the beginning of the demonstrations dataset.
+
+---
+
+### 3️⃣ Dynamic Few-Shot Prompting
+
+A similarity-based example selection strategy was implemented:
+
+* For each target tweet, the most semantically similar examples are selected.
+* Similarity is computed using **Euclidean distance** in embedding space.
+* The selected examples are balanced (half **YES**, half **NO**).
+
+This strategy aims to provide more relevant demonstrations tailored to each input.
+
+---
+
+## Inference Pipeline
+
+The prompting pipeline follows these steps:
+
+1. Prompt formatting
+2. Tokenization
+3. Model inference
+4. Extraction of textual output (`"YES"` / `"NO"`)
+5. Conversion to binary labels (1 / 0)
+6. Metric computation
+
+A **low temperature** (near greedy decoding) was used to reduce randomness, as the task is deterministic classification rather than generative text production.
+
+---
+
+## Evaluation Metrics
+
+Unlike Part 1 (which focused on macro F1-score), this part evaluates:
+
+* **Accuracy**
+* **Error Rate (Fail Ratio)**
+* **Confusion Matrix** (TP, TN, FP, FN)
+
+---
+
+## Experimental Results
+
+### Accuracy Comparison
+
+| Model Configuration | Accuracy | Fail Ratio |
+| ------------------- | -------- | ---------- |
+| v0.2 – Zero-Shot    | 0.740    | 0.260      |
+| v0.3 – Few-Shot     | 0.733    | 0.267      |
+| v0.2 – Dynamic FS   | 0.713    | 0.287      |
+| v0.2 – Few-Shot     | 0.673    | 0.327      |
+| v0.3 – Zero-Shot    | 0.587    | 0.413      |
+
+---
+
+## Confusion Matrix Highlights
+
+Key observations:
+
+* **Mistral v0.3 produced significantly more false positives than v0.2.**
+* **v0.2 Zero-Shot achieved the best overall accuracy.**
+* Few-shot prompting did not consistently outperform zero-shot.
+* Dynamic few-shot helped **v0.2** but degraded **v0.3** performance.
+
+
+
 
 
